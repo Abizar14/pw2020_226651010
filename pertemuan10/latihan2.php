@@ -1,7 +1,6 @@
 <?php
 
 // Koneksi Ke DataBase
-$conn = mysqli_connect("localhost", "root", "", "tim_226651010");
 
 // Ambil query Data Dari DataBase
 $result = mysqli_query($conn, "SELECT * FROM mahasiswa");
