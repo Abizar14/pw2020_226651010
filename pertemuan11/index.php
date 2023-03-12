@@ -1,7 +1,12 @@
 <?php
 
-require "../pertemuan10/functions.php";
+require "functions.php";
 $mahasiswa = query("SELECT * FROM mahasiswa");
+
+// jika tombol cari udah ditekan
+if (isset($_POST['cari'])){
+  $mahasiswa = cari($_POST['keyword']);
+}
 
 ?>
 
@@ -22,6 +27,11 @@ $mahasiswa = query("SELECT * FROM mahasiswa");
     text-align: center;
     position: relative;
     top: 60px;
+  }
+
+  .tombolCari {
+    position: relative;
+    left: 10px;
   }
 
   .container {
@@ -52,7 +62,12 @@ th {
     <h2>Daftar Mahasiswa</h2>
     <a href="tambah.php">Tambah Mahasiswa</a>
     <br><br>
+    <form action="" method="post" class="tombolCari">
+      <input type="text" name="keyword" autocomplete="off" autofocus>
+      <button type="submit" name="cari">Cari!</button>
+    </form>
   </div>
+
 
   <div class="container">
   <table border="1" cellpadding="10" cellspacing="0">
@@ -62,8 +77,14 @@ th {
       <th>Nama</th>
       <th>Detail</th>
       <th>Aksi</th>
-      
     </tr>
+    <?php if(empty($mahasiswa)) : ?>
+    <tr>
+      <td colspan="5"><p style="color: red; text-align: center;">Data Tidak Ditemukan</p></td>
+    </tr>
+    <?php endif; ?>
+
+
     <?php $i = 1;
 foreach ($mahasiswa as $m): ?>
     <tr>
