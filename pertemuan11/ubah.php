@@ -2,13 +2,25 @@
 
 require "functions.php";
 
+// jika id tidak ada 
+if (!isset($_GET['id'])) {
+  header("Location: index.php");
+  exit;
+}
+
+// ambil id dari url 
+$id = $_GET['id'];
+
+// query mahasiswa 
+$m = query("SELECT * FROM mahasiswa WHERE id = '$id'");
+
 // cek apakah tombol sudah ditekan apa belum
-if(isset($_POST['tambah'])) {
-  if (tambah($_POST)) {
+if(isset($_POST['ubah'])) {
+  if (ubah($_POST)) {
     echo '<script>
     
-    alert("data berhasil ditambahkan");
-    document.location.href = latihan3.php;
+    alert("data berhasil diubah");
+    document.location.href = "index.php";
     
     </script>';
   } else {
@@ -25,7 +37,7 @@ if(isset($_POST['tambah'])) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tambah Mahasiswa</title>
+  <title>Ubah Data Mahasiswa</title>
 </head>
 <body>
   <style>
@@ -78,24 +90,25 @@ button:hover {
   background-color: #0062cc;
 }
   </style>
-  <h2>Data Mahasiswa</h2>
+  <h2>Ubah Data Mahasiswa</h2>
   <form action="" method="post">
+  <input type="hidden" name="id" value="<?= $m['id'] ?>">
   <label for="nama">Nama  :</label>
-  <input type="text" id="nama" name="nama" autofocus required>
+  <input type="text" id="nama" name="nama" autofocus required value="<?= $m['nama'] ?>">
 
   <label for="nim">NIM   :</label>
-  <input type="text" id="nim" name="nim" required>
+  <input type="text" id="nim" name="nim" required value="<?= $m['nim'] ?>">
   
   <label for="email">Email :</label>
-  <input type="email" id="email" name="email" required>
+  <input type="email" id="email" name="email" required value="<?= $m['email'] ?>">
 
   <label for="jurusan">Jurusan :</label>
-  <input type="text" id="jurusan" name="jurusan" required>
+  <input type="text" id="jurusan" name="jurusan" required value="<?= $m['jurusan'] ?>">
   
   <label for="gambar">Gambar :</label>
-  <input type="text" id="gambar" name="gambar" required>
+  <input type="text" id="gambar" name="gambar" required value="<?= $m['gambar'] ?>">
 
-  <button type="submit" name="tambah">Kirim</button>
+  <button type="submit" name="ubah">Kirim</button>
   </form>
 </body>
 </html>
