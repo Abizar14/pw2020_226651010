@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+// membuat logika login jika dia belum login maka kembalikan ke halaman login
+if (!isset($_SESSION['login'])) {
+  header("Location: login.php");
+  exit;
+}
 
 require "functions.php";
 $mahasiswa = query("SELECT * FROM mahasiswa");
@@ -56,6 +63,30 @@ th {
   color: white;
 }
 
+.logoutBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  position: relative;
+  bottom: 400px;
+  
+}
+
+.logoutbtn {
+  background-color: red;
+  text-align: center;
+  width: 5%;
+  padding: 10px;
+  text-decoration: none;
+  color: white;
+  border-radius: 10px;
+}
+
+.logoutbtn:hover {
+  background-color: darkred;
+}
+
   </style>
   <div class="header-text">
 
@@ -103,6 +134,9 @@ foreach ($mahasiswa as $m): ?>
     </tr>
     <?php endforeach; ?>
   </table>
+  </div>
+  <div class="logoutBtn">
+    <a href="logout.php" class="logoutbtn">Logout</a>
   </div>
 </body>
 
